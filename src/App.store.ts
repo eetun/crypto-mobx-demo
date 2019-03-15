@@ -8,6 +8,21 @@ export class AppStore {
   setCurrency = currency => {
     this.currency = currency;
   };
+
+  getCurrencyName = () => {
+    switch (this.currency) {
+      case "BTC":
+        return "BitCoin";
+        break;
+      case "ETH":
+        return "Ethereum";
+        break;
+      default:
+        return null;
+    }
+
+    return null;
+  };
 }
 
 export default new AppStore();
