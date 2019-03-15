@@ -21,27 +21,6 @@ body {
   color: #fff;
 }
 
-.currencies {
-  display: flex;
-  margin-bottom: 30px;
-}
-
-.currency {
-  cursor: pointer;
-}
-
-.currency > .ticker {
-  font-size: 1.75em;
-}
-
-.currency > .price {
-  font-size: 2.5em;
-}
-
-.currency:not(:first-child) {
-  margin-left: 15px;
-}
-
 .chart-container .title {
   font-size: 1.5em;
 }
