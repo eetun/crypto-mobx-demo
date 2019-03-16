@@ -2,11 +2,16 @@ import { observable, action } from "mobx";
 
 export class AppStore {
   @observable currency = "BTC";
-  @observable timeInterval = "";
+  @observable timeInterval = 1;
 
   @action
   setCurrency = currency => {
     this.currency = currency;
+  };
+
+  @action
+  setTimeInterval = timeInterval => {
+    this.timeInterval = timeInterval;
   };
 
   getCurrencyName = () => {
