@@ -1,4 +1,4 @@
-import { observable, action, autorun } from "mobx";
+import { observable, action, autorun, computed } from "mobx";
 
 export class AppStore {
   @observable currency = "BTC";
@@ -6,8 +6,15 @@ export class AppStore {
   @observable currencyData: any[] = [];
   @observable isLoading = false;
 
+  @observable currentPrice = {
+    BTC: 0,
+    ETH: 0
+  };
+
   constructor() {
     autorun(() => this.fetchCurrencyData());
+
+    this.fetchCurrentPrice();
   }
 
   @action
@@ -37,6 +44,18 @@ export class AppStore {
         console.log("Got", response.Data);
         this.currencyData = response.Data;
         this.isLoading = false;
+      });
+  };
+
+  fetchCurrentPrice = async () => {
+    const apiRoot = process.env.REACT_APP_API_URL;
+    const apiUrl = `${apiRoot}/pricemulti?fsyms=BTC,ETH&tsyms=EUR`;
+
+    await fetch(apiUrl)
+      .then(response => response.json())
+      .then(response => {
+        this.currentPrice.BTC = response.BTC.EUR;
+        this.currentPrice.ETH = response.ETH.EUR;
       });
   };
 

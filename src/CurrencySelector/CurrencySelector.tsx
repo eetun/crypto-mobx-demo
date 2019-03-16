@@ -22,7 +22,7 @@ export default class CurrencySelector extends Component {
           })}
         >
           <div className="ticker">BTC</div>
-          <div className="price">$ 3500</div>
+          <div className="price">{AppStore.currentPrice.BTC} €</div>
         </div>
         <div
           onClick={evt => this.setCurrency("ETH")}
@@ -31,7 +31,7 @@ export default class CurrencySelector extends Component {
           })}
         >
           <div className="ticker">ETH</div>
-          <div className="price">$ 3500</div>
+          <div className="price">{AppStore.currentPrice.ETH} €</div>
         </div>
       </div>
     );
