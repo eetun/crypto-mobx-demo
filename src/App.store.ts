@@ -3,10 +3,11 @@ import { observable, action, autorun } from "mobx";
 export class AppStore {
   @observable currency = "BTC";
   @observable timeInterval = 1;
-  @observable graphData = null;
+  @observable currencyData: any[] = [];
+  @observable isLoading = false;
 
   constructor() {
-    autorun(() => this.fetchGraphData());
+    autorun(() => this.fetchCurrencyData());
   }
 
   @action
@@ -19,8 +20,10 @@ export class AppStore {
     this.timeInterval = timeInterval;
   };
 
-  fetchGraphData = async () => {
+  fetchCurrencyData = async () => {
     console.log("Fetching graph data");
+
+    this.isLoading = true;
 
     const currency = this.currency;
     const timeInterval = this.timeInterval;
@@ -31,7 +34,9 @@ export class AppStore {
     await fetch(apiUrl)
       .then(response => response.json())
       .then(response => {
-        this.graphData = response.Data;
+        console.log("Got", response.Data);
+        this.currencyData = response.Data;
+        this.isLoading = false;
       });
   };
 
