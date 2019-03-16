@@ -1,8 +1,13 @@
-import { observable, action } from "mobx";
+import { observable, action, autorun } from "mobx";
 
 export class AppStore {
   @observable currency = "BTC";
   @observable timeInterval = 1;
+  @observable graphData = null;
+
+  constructor() {
+    autorun(() => this.fetchGraphData());
+  }
 
   @action
   setCurrency = currency => {
@@ -14,19 +19,31 @@ export class AppStore {
     this.timeInterval = timeInterval;
   };
 
+  fetchGraphData = async () => {
+    console.log("Fetching graph data");
+
+    const currency = this.currency;
+    const timeInterval = this.timeInterval;
+
+    const apiRoot = process.env.REACT_APP_API_URL;
+    const apiUrl = `${apiRoot}/histoday?fsym=${currency}&tsym=EUR&limit=${timeInterval}`;
+
+    await fetch(apiUrl)
+      .then(response => response.json())
+      .then(response => {
+        this.graphData = response.Data;
+      });
+  };
+
   getCurrencyName = () => {
     switch (this.currency) {
       case "BTC":
         return "BitCoin";
-        break;
       case "ETH":
         return "Ethereum";
-        break;
       default:
         return null;
     }
-
-    return null;
   };
 }
 
