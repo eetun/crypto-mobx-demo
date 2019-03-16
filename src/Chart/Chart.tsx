@@ -85,6 +85,9 @@ export default class Chart extends Component {
             display: true,
             scaleLabel: {
               display: true
+            },
+            ticks: {
+              beginAtZero: true
             }
           }
         ]
