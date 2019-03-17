@@ -3,6 +3,7 @@ import { observable, action, autorun, computed } from "mobx";
 export class AppStore {
   @observable currency = "BTC";
   @observable timeInterval = 1;
+  @observable timeUnit = "hour";
   @observable currencyData: any[] = [];
   @observable isLoading = false;
 
@@ -25,6 +26,7 @@ export class AppStore {
   @action
   setTimeInterval = timeInterval => {
     this.timeInterval = timeInterval;
+    this.timeUnit = timeInterval === 1 ? "hour" : "day";
   };
 
   fetchCurrencyData = async () => {
@@ -33,10 +35,12 @@ export class AppStore {
     this.isLoading = true;
 
     const currency = this.currency;
-    const timeInterval = this.timeInterval;
+    const timeUnit = this.timeUnit;
+    const timeInterval =
+      timeUnit === "hour" ? this.timeInterval * 24 : this.timeInterval;
 
     const apiRoot = process.env.REACT_APP_API_URL;
-    const apiUrl = `${apiRoot}/histoday?fsym=${currency}&tsym=EUR&limit=${timeInterval}`;
+    const apiUrl = `${apiRoot}/histo${timeUnit}?fsym=${currency}&tsym=EUR&limit=${timeInterval}`;
 
     await fetch(apiUrl)
       .then(response => response.json())

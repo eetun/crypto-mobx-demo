@@ -73,8 +73,16 @@ export default class Chart extends Component {
                 const day = date.getDate();
                 const month = date.getMonth() + 1;
                 const year = date.getFullYear();
+                const hours = date.getHours();
+                const minutes = date.getMinutes();
 
-                return `${day}.${month}.${year}`;
+                const dateString = `${day}.${month}.${year}`;
+                const timeString = `${hours}:00`;
+
+                return (
+                  dateString +
+                  (AppStore.timeUnit === "hour" ? " " + timeString : "")
+                );
               },
               stepSize: 3.6e6
             }
