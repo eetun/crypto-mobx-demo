@@ -29,6 +29,28 @@ export class AppStore {
     this.timeUnit = timeInterval === 1 ? "hour" : "day";
   };
 
+  @computed
+  get priceChange() {
+    if (this.isLoading) {
+      return null;
+    }
+    const openingPrice = this.currencyData[0].high;
+    const closingPrice = this.currencyData[this.currencyData.length - 1].high;
+
+    return (closingPrice - openingPrice).toFixed(2);
+  }
+
+  @computed
+  get priceChangePercentage() {
+    if (this.isLoading) {
+      return null;
+    }
+    const openingPrice = this.currencyData[0].high;
+    const closingPrice = this.currencyData[this.currencyData.length - 1].high;
+
+    return (((closingPrice - openingPrice) / openingPrice) * 100).toFixed(2);
+  }
+
   fetchCurrencyData = async () => {
     console.log("Fetching graph data");
 

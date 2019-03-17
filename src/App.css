@@ -39,3 +39,20 @@ body {
 .statbar .time-btn.active {
   border-bottom: 2px solid #1193f5;
 }
+
+.increase {
+  color: #046e4b;
+}
+.increase:before {
+  content: "\1f82D";
+  margin-right: 5px;
+}
+
+.decrease {
+  color: #d10a46;
+}
+
+.decrease:before {
+  content: "\1f82F";
+  margin-right: 5px;
+}

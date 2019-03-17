@@ -14,6 +14,17 @@ export default class TitleBar extends Component {
 
   render() {
     const title = this.getCurrencyName();
-    return <div className="title">{title}</div>;
+    const priceChange = AppStore.priceChange || 0;
+    const priceChangePercentage = AppStore.priceChangePercentage || 0;
+    const priceClass = priceChange > 0 ? "increase" : "decrease";
+
+    return (
+      <div className="title">
+        {title}{" "}
+        <span className={priceClass}>
+          {priceChange} € ({priceChangePercentage}%)
+        </span>
+      </div>
+    );
   }
 }
